@@ -1,0 +1,49 @@
+---
+title: "question06"
+author: "Kyle Alvarez"
+format: pdf
+---
+
+# Example Code To Be Reduced
+```{r}
+library(bio3d)
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s3, chain="A", elety="CA")
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+# Example Code Reduced to a Function
+> Q6. How would you generalize the code above to work with any set of input protein structures
+
+```{r}
+analyzePDI <- function(kinase){ # Takes a kinase as its argument
+  structure <- read.pdb(kinase) # Reads the protein data bank of the kinase and stores it within the variable structure
+  structure.chainA <- trim.pdb(structure, chain="A", elety="CA") # Trims the PDB object of the kinase to get its structure at the specified chain and elety
+  structure.b <-  structure.chainA$atom$b # Assigns the specific atom from the proteins's Chain A to a different variable
+  plotb3(structure.b, sse=structure.chainA, type="l", ylab="Bfactor") # Plots the data of Residue vs Bfactor from the structure.b variable in a line graph
+}
+
+```
+In order to use this function all you have to do is type `analyzePDI()` and insert the kinase/protein that you want to be analyzed in quotations within the parentheses of the argument.
+
+The output of the function is a line graph that plots the residue against the Bfactor of a kinase/protein.
+
+
+
+# Using the simplified function for the example kinases
+Tests the function against the example kinases to see if the graphs are the same, in this case it is. Hence we have a simplified function in which we can use to plot different kinases instead of having to manually type out every step subsequently.
+```{r}
+analyzePDI("4AKE")
+analyzePDI("1AKE")
+analyzePDI("1E4Y")
+```
+
