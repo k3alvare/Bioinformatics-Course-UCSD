@@ -1,6 +1,6 @@
 ---
 title: "Class 15 : Essential UNIX for Bioinformatics"
-format: pdf
+format: gfm
 ---
 
 ```{r}
