@@ -3,7 +3,7 @@ Bioinformatics Class Fall 2022 at UC San Diego.
 
 Here is a portfolio of my work for [BIMM143](https://bioboot.github.io/bimm143_F22/).
 
-- Class 5: [Data exploration and visualization in R](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week03/class05/class05.md_
+- Class 5: [Data exploration and visualization in R](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week03/class05/class05.md)
 - Class 6: [Why, when and how of writing your own R functions](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week03/class06/class06.md)
 - Class 7: [Introduction to machine learning for Bioinformatics 1](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week04/class07/class07.md)
 - Class 8: [Unsupervised learning mini-project](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week04/class_08_miniproject/Untitled.md)
