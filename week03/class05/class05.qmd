@@ -1,7 +1,7 @@
 ---
 title: "Class 5: Data Visualization with GGPLOT"
 author: "Kyle"
-format: html
+format: gfm
 ---
 
 # Our first ggplot
