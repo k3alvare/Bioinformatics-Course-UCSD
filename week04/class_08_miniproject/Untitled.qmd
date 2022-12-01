@@ -1,7 +1,7 @@
 ---
 author: "Kyle Alvarez"
 title: "class_08_miniproject"
-format: pdf
+format: gfm
 ---
 
 # Class 8 Mini-Project
