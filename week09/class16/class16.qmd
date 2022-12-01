@@ -1,0 +1,163 @@
+---
+title: "COVID-19 Vaccination Rates Mini-Project"
+author: "Kyle"
+format: gfm
+---
+
+We will be examining and comparing the Covid-19 vaccination rates in San Diego.
+
+Start by downloading the most recently dated “Statewide COVID-19 Vaccines Administered by ZIP Code” CSV file.
+
+```{r}
+# Import vaccination data
+vax <- read.csv("https://data.chhs.ca.gov/dataset/ead44d40-fd63-4f9f-950a-3b0111074de8/resource/ec32eece-7474-4488-87f0-6e91cb577458/download/covid19vaccinesbyzipcode_test.csv")
+head(vax)
+```
+> Q1. What column details the total number of people fully vaccinated?
+The column that details the total number of people fully vaccinated is "persona_fully_vaccinated".
+
+> Q2. What column details the Zip code tabulation area?
+The column that details the Zip code tabululation area is "zip_code_tabulation_area".
+
+```{r}
+head(vax$as_of_date)
+tail(vax$as_of_date)
+```
+> Q3. What is the earliest date in this dataset?
+The earliest date is 2021-01-05
+
+> Q4. What is the latest date in this dataset?
+The latest date is 2022-11-22
+
+```{r}
+skimr::skim(vax)
+```
+
+> Q5. How many numeric columns are in this dataset?
+There are 13 numeric columns in this dataset
+
+```{r}
+sum(is.na(vax$persons_fully_vaccinated))
+```
+> Q6. Note that there are “missing values” in the dataset. How many NA values there in the persons_fully_vaccinated column?
+ According to my data set there is 14921 missing values, however in the lab sheet there is 15440 missing.
+ 
+ > Q7. What percent of persons_fully_vaccinated values are missing (to 2 significant figures)?
+ In my data set there is 8.54% percent of persona_fully_vaccinated values missing. In the lab sheet there is 8.93%
+ 
+ 
+```{r}
+nrow(vax)
+14921/174636 * 100
+```
+> Q8. [Optional]: Why might this data be missing?
+Data might be missing because the person might of requested to opt out of their information being studied.
+
+## Working with Dates
+
+Using the `lubridate` package, dates and times become easier to work with.
+```{r}
+library(lubridate)
+```
+
+```{r}
+today()
+```
+```{r}
+# Specify that we are using the year-month-day format
+vax$as_of_date <- ymd(vax$as_of_date)
+```
+
+Now we can do math with dates. For example: How many days have passed since the first vaccination reported in this dataset?
+```{r}
+today() - vax$as_of_date[1]
+```
+
+Using the last and the first date value we can now determine how many days the dataset span.
+```{r}
+vax$as_of_date[nrow(vax)] - vax$as_of_date[1]
+```
+> Q9. How many days have passed since the last update of the dataset?
+According to my dataset only 3 days have passed, whilst the lab sheet 6 days have passed.
+
+> Q10. How many unique dates are in the dataset (i.e. how many different dates are detailed)?
+99 unique dates according to my dataset, whilst the lab sheet is 97 unique dates.
+
+```{r}
+(unique(vax$as_of_date))
+```
+
+## Working with ZIP codes
+
+In R we can use the zipcodeR package to make working with these codes easier. For example, let’s install and then load up this package and to find the centroid of the La Jolla 92037 (i.e. UC San Diego) ZIP code area.
+```{r}
+library(zipcodeR)
+```
+
+```{r}
+geocode_zip('92037')
+```
+
+Calculate the distance between the centroids of any two ZIP codes in miles, e.g.
+```{r}
+zip_distance('92037','92109')
+```
+More usefully, we can pull census data about ZIP code areas (including median household income etc.). For example:
+```{r}
+reverse_zipcode(c('92037', "92109") )
+```
+
+Let’s now focus in on the San Diego County area by restricting ourselves first to `vax$county == "San Diego"` entries
+```{r}
+# Subset to San Diego county only areas
+sd <- vax[ vax$county == "San Diego" , ]
+```
+
+Using dplyr the code would look like this:
+```{r}
+library(dplyr)
+
+sd <- filter(vax, county == "San Diego")
+
+nrow(sd)
+```
+Using dplyr is often more convenient when we are subsetting across multiple criteria - for example all San Diego county areas with a population of over 10,000.
+```{r}
+sd.10 <- filter(vax, county == "San Diego" &
+                age5_plus_population > 10000)
+```
+
+> Q11. How many distinct zip codes are listed for San Diego County
+107 distinct zip codes are listed for San Diego County.
+
+```{r}
+length(unique(sd$zip_code_tabulation_area))
+```
+> Q12. What San Diego County Zip code area has the largest 12 + Population in this dataset?
+92154 has the highest 12 + population in this dataset.
+
+```{r}
+which.max(sd.10$age12_plus_population)
+sd.10[32,]
+```
+
+```{r}
+sd.toplot <- filter(vax, county == "San Diego" &
+                      as_of_date == "2022-11-15")
+```
+> Q13. What is the overall average “Percent of Population Fully Vaccinated” value for all San Diego “County” as of “2022-11-15”?
+The overal average of percent in my dataset is 0.7369099 but in the lab it is "0.738176464646465
+
+```{r}
+mean(na.omit(sd.toplot$percent_of_population_fully_vaccinated))
+```
+
+> Q14. Using either ggplot or base R graphics make a summary figure that shows the distribution of Percent of Population Fully Vaccinated values as of “2022-11-15”?
+
+```{r}
+library(ggplot2)
+
+##ggplot(sd.toplot, aes(+
+     #    geom_bar(stat = "bin")
+```
+
