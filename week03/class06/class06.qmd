@@ -1,7 +1,7 @@
 ---
 title: "class06"
 author: "Kyle Alvarez"
-format: pdf
+format: gfm
 toc: true
 ---
 
