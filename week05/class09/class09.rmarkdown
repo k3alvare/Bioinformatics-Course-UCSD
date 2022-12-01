@@ -4,6 +4,7 @@ author: "Kyle Alvarez"
 format: gfm
 ---
 
+
 ## The RCSB Protein Data Bank (PDB)
 
 Protein structures by X-ray crystalagraphy dominate this database. We are skipping Q1-3 as the website was too slow for us.
@@ -29,28 +30,35 @@ In order to enter the binding site, the protein can undergo conformational chang
 
 Bio3D is an R package for structural bioinformatics. To use it we need to call it up with the `library()` function (just like any package).
 
+
 ```{r}
 library(bio3d)
 ```
 
+
 To read a PDB file we can use `read.pdb()`
+
 
 ```{r}
 pdb  <- read.pdb("1hsg")
 pdb
 ```
 
+
 The ATOM records of a PDB file are stored in `pdb$atom`
+
 
 ```{r}
 head(pdb$atom)
 ```
+
 
 # Comparative analysis of Aneylate kinase (ADK)
 
 We will start our analysis with a single PDB id (code form the PDB database): 1AKE
 
 First we get it's priamry sequence:
+
 
 ```{r}
 aa <- get.seq("1ake_a")
@@ -68,19 +76,25 @@ aa
 # List out some 'top hits'
 #head(hits$pdb.id)
 ```
+
 Use  these ADK structures for analysis:
+
 ```{r}
 hits <- NULL
 hits$pdb.id <- c('1AKE_A','6S36_A','6RZE_A','3HPR_A','1E4V_A','5EJE_A','1E4Y_A','3X2S_A','6HAP_A','6HAM_A','4K46_A','3GMT_A','4PZL_A')
 ```
 
+
 Download all these PDB files from the online database...
+
 ```{r}
 # Download related PDB files
 files <- get.pdb(hits$pdb.id, path="pdbs", split=TRUE, gzip=TRUE)
 ```
 
+
 Align all these structures
+
 ```{r}
 # Align releated PDBs
 pdbs <- pdbaln(files, fit = TRUE, exefile="msa")
@@ -95,7 +109,9 @@ ids <- basename.pdb(pdbs$id)
 # plot(pdbs, labels=ids)
 ```
 
+
 # Jump to PCA
+
 
 ```{r}
 # Perform PCA
@@ -103,7 +119,9 @@ pc.xray <- pca(pdbs)
 plot(pc.xray)
 ```
 
+
 Calculate a prettier plot of the analysis:
+
 
 ```{r}
 # Calculate RMSD
@@ -116,16 +134,20 @@ grps.rd <- cutree(hc.rd, k=3)
 plot(pc.xray, 1:2, col="grey50", bg=grps.rd, pch=21, cex=1)
 ```
 
+
 # Optional further visualization
 
 To visualize the major structural variations in the 
+
 ```{r}
 # Visualize first principal component
 pc1 <- mktrj(pc.xray, pc=1, file="pc_1.pdb")
 ```
 
 
+
 We can also plot our main PCA results using ggplot:
+
 ```{r}
 #Plotting results with ggplot2
 library(ggplot2)
@@ -144,14 +166,17 @@ p <- ggplot(df) +
 p
 ```
 
+
 # Normal Mode Analysis
 
 Use the `nma()` function to provide a normal mode analysis on both of the single structures or a complete structure ensemble. This facilitates characterizing and comparing flexibility profiles of related protein structures.
+
 ```{r}
 # NMA of all structures
 modes <- nma(pdbs)
 plot(modes, pdbs, col=grps.rd)
 ```
+
 
 > Q14. What do you note about this plot? Are the black and colored lines similar or different? Where do you think they differ most and why?
 
