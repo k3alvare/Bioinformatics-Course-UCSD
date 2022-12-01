@@ -1,7 +1,7 @@
 ---
 title: "Class 12: RNASeq Analysis"
 author: "Kyle Alvarez"
-format: html
+format: gfm
 ---
 
 In today's class we will work with published RNA-seq experiment where airway smooth muscle cells were treated with dexamethasone, a synthetic glucocorticoid steroid with anti-inflammatory effects (Himes et al. 2014).
