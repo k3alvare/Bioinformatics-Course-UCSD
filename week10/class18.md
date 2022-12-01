@@ -1,4 +1,4 @@
-Class 18: Pertussis Mini-Proj
+Class 17: Pertussis Mini-Project
 ================
 Kyle
 
