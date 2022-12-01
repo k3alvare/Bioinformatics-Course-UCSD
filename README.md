@@ -13,3 +13,5 @@ Here is a portfolio of my work for [BIMM143](https://bioboot.github.io/bimm143_F
 - Class 12: [Transcriptomics, RNA-Seq analysis, and the interpretation of gene lists](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week06/class12/class12.md)
 - Class 13: [RNA-Seq mini project](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week07/class13/class13.md)
 - Class 15: [Essential UNIX for bioinformatics](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week08/class15/Untitled.md)
+- Class 16: [Vaccination rate mini project](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week09/class16/class16.md)
+- Class 17: [Mini Project: Investigating Pertussis Resurgence](https://github.com/k3alvare/Bioinformatics-Course-UCSD/blob/main/week10/class18.md)
